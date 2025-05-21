@@ -54,27 +54,13 @@ jobs:
         with:
           output_file: ${{ github.output }}
 
-      # Create GitHub Release
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            Auto generated release for ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-
       # Upload artifact to Release
       - name: Upload artifact to Release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: prometheus-exporter-${{ steps.properties.outputs.version }}.zip
           asset_name: prometheus-exporter-${{ steps.properties.outputs.version }}.zip
           asset_content_type: application/zip
