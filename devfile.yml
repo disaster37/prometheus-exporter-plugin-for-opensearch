@@ -39,21 +39,24 @@ components:
 commands:
   - id: clean
     exec:
+      labels: Clean
       component: tools
       workingDir: ${PROJECT_SOURCE}/
       commandLine: "./gradlew clean"
       group:
         kind: run
 
-  - id: Build and Run Tests
+  - id: build
     exec:
+      labels: Build and Run Tests
       component: tools
       commandLine: "./gradlew --info build"
       group:
         kind: run
 
-  - id: BWC tests
+  - id: bwc
     exec:
+      labels: Run BWC Tests
       component: tools
       workingDir: ${PROJECT_SOURCE}/
       commandLine: "./gradlew --info bwcTestSuite -Dtests.security.manager=false"
